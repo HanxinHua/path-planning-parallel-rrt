@@ -18,7 +18,7 @@ double costCalculation(int place, int dest, int col) {
 
 
 
-int rrt(int robot, int dest, int col, int row, double prob) {
+int rrt(int robot, int dest, int col, int row, double prob, int * puzzel) {
 	priority_queue<double, vector<double>, greater<double> > myqueue;
 	vector<int> stencil;
 	if (robot%col !=0) {
@@ -36,7 +36,7 @@ int rrt(int robot, int dest, int col, int row, double prob) {
 	int neighbor;
 	for (int i = 0; i < stencil.size(); i++) {
 		neighbor = robot + stencil[i];
-		myqueue.push(costCalculation(neighbor, dest, col));
+		if (puzzel[neighbor] != -1) myqueue.push(costCalculation(neighbor, dest, col));
 	}
 	int best = myqueue.top();
 	srand(time(0));
@@ -44,6 +44,9 @@ int rrt(int robot, int dest, int col, int row, double prob) {
 	if (p < prob) return best;
 	else {
 		int pick = rand()%stencil.size();
+		while (puzzel[robot+stencil[pick]] == -1) {
+			pick = rand()%stencil.size();
+		}
 		return (robot+stencil[pick]);
 	}	
 }
