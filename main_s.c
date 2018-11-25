@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 //#include <omp.h>
-#include <mpi.h>
+//#include <mpi.h>
 //#include <sstream>
 
 int main(int argc, char **argv) {
@@ -36,28 +36,32 @@ int main(int argc, char **argv) {
     //int leap=0;
     int load_number =0;
 
-    while((len = getline(&line, &sz, f)) >0 && i<rows){      // read in the obstacles info
-      printf("%d number of len is %zu\n",i,len);
-      
+    while((len = getline(&line, &sz, f))>0){
+      printf("%d number of len is %zu\n",i,len);   // read in the obstacles info
+      load_number=0;
       for(j=0;j<len-1;j++){
         if(line[j]=='1'){
             matrix[i*rows+j]=-1;
             printf("find one -1\n");
+            load_number++;
         }
         else{
             matrix[i*rows+j]=0;
+            load_number++;
             }
         }
-      printf("row %d\n",i);
-      i++;
-      if(i==rows){
-        printf("heihei");
-        break;
-        printf("haha");
+      int int_row = (int) rows;
+      if(i==int_row-1){
+          len = len*0;
+          printf("len is %zu\n",len);
+          break;
       }
+      printf("row %d loadnumber is %d\n",i,load_number);
+      i++;
     }
 
-    printf("finished loading");
+    printf("cc\n");
+    printf("finished loading\n");
 
     free(line);
     
@@ -68,18 +72,29 @@ int main(int argc, char **argv) {
     /* Intializes random number generator */
    srand((unsigned) time(&t));
 
-   /* Print 100 random numbers from 0 to 1000,000 */
-   for( i = 0 ; i < robot_number ; i++ ) {
-      int index = rand() % domain_size;
-      while(matrix[index]==-1){
-        int index = rand() % domain_size;
-      }
-      matrix[index] ++;
-   }
+   printf("cc2\n");
+   
+    i = 0;
+    
+   //Print 100 random numbers from 0 to 1000,000 
+  
+   
 
    for( i = 0 ; i < rows * cols ; i++ ) {
-       //printf("%d",matrix[i] );
+       printf("%d",matrix[i] );
    }
+
+    for( int robot = 0 ; robot < robot_number ; robot++ ) {
+    printf("I am in for loop\n");
+    int index;
+    index = rand() % domain_size;
+    printf("index number is %d\n",index);
+    while(matrix[index]==(-1)){
+        index = rand() % domain_size;
+    }
+    matrix[index] ++;
+    printf("robot number is %d\n",robot);
+    }
 
 
 }
