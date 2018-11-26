@@ -3,8 +3,8 @@
 
 
 int main(int argc, char **argv) {
-    int rows = 1000;
-    int cols = 1000;
+    int rows = 50;
+    int cols = 50;
     int i, j;
     int ** matrix = NULL;
     matrix = malloc(rows * sizeof(int *));
@@ -20,18 +20,18 @@ int main(int argc, char **argv) {
 
     // set the obstacles in the simulation domain
 
-    for(i = 100; i < 200; i++){
-        for(j = 150; j < 160; j++){
+    for(i = rows/10; i < rows/5; i++){
+        for(j = cols*15/100; j < 16*cols/100; j++){
             matrix[i][j]= 1;
         }
     }
 
-    int diag_r_start1 = 800;
-    int diag_r_end1 = 1000;
-    int diag_c_start1 = 200;
+    int diag_r_start1 = 8*rows/10;
+    int diag_r_end1 = rows;
+    int diag_c_start1 = cols/5;
     //int diag_c_end1 = 420;
     int color_start = 0;
-    int color_end = 20;
+    int color_end = rows/50;
 
     for(i = diag_r_start1; i < diag_r_end1; i++){
             for(j = diag_c_start1+color_start; j < diag_c_start1+color_end; j++){
@@ -42,11 +42,11 @@ int main(int argc, char **argv) {
     }
 
     int diag_r_start2 = 0;
-    int diag_r_end2 = 200;
-    int diag_c_start2 = 500;
+    int diag_r_end2 = rows/5;
+    int diag_c_start2 = cols/2;
     //int diag_c_end2 = 720;
     color_start = 0;
-    color_end = 20;
+    color_end = rows/50;
 
     for(i = diag_r_end2; i > diag_r_start2 -1; i--){
             for(j = diag_c_start2+color_start; j < diag_c_start2+color_end; j++){
@@ -56,8 +56,8 @@ int main(int argc, char **argv) {
         color_end ++;
     }
 
-     for(i = 550; i < 600; i++){
-        for(j = 800; j < 1000; j++){
+     for(i = 55*rows/100; i < 6*rows/10; i++){
+        for(j = 4*cols/5; j < cols; j++){
             matrix[i][j]= 1;
         }
     }

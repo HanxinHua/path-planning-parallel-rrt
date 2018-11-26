@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
     for (i=0; i<rows*cols; i++) {
 		matrix_new[i]=matrix[i];
 	}
-    int robot_number =100;
+    int robot_number =30;
     time_t t;
     int domain_size = rows * cols;
 
@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
     }
 	
 	int newPlace;
-	for (int step=0; step<10000; step++) {
+	for (int step=0; step<100; step++) {
 		printf("step %d\n",step);
 		for (int cor=0; cor<rows*cols-1; cor++) {
 				while (matrix[cor]>0) {
