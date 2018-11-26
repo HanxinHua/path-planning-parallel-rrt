@@ -3,8 +3,8 @@
 
 
 int main(int argc, char **argv) {
-    int rows = 100;
-    int cols = 100;
+    int rows = 1000;
+    int cols = 1000;
     int i, j;
     int ** matrix = NULL;
     matrix = malloc(rows * sizeof(int *));
@@ -40,6 +40,7 @@ int main(int argc, char **argv) {
         color_start ++;
         color_end ++;
     }
+	
 
     int diag_r_start2 = 0;
     int diag_r_end2 = rows/5;
