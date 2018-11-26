@@ -3,12 +3,12 @@
 
 
 int main(int argc, char **argv) {
-    int rows = 1000;
+    int rows = 6400;
     int cols = 1000;
     int i, j;
     int ** matrix = NULL;
     matrix = malloc(rows * sizeof(int *));
-        for (j = 0; j < cols; j++) {
+        for (j = 0; j < rows; j++) {
             matrix[j] = malloc(cols * sizeof(int));
         }
 
@@ -39,6 +39,9 @@ int main(int argc, char **argv) {
             }
         color_start ++;
         color_end ++;
+        if((diag_c_start1 + color_end)>cols ){
+            break;
+        }
     }
 	
 
@@ -55,6 +58,9 @@ int main(int argc, char **argv) {
             }
         color_start ++;
         color_end ++;
+         if((diag_c_start2 + color_end)>cols ){
+            break;
+        }
     }
 
      for(i = 55*rows/100; i < 6*rows/10; i++){
