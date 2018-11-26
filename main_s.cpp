@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <queue>
+#include <map>
 #include <vector>
 #include <time.h>
 
@@ -25,7 +25,7 @@ double costCalculation(int place, int dest, int col) {
 
 
 int rrt(int robot, int dest, int col, int row, double prob, int * puzzel) {
-	priority_queue<double, vector<double>, greater<double> > myqueue;
+	map<double, int> mymap;
 	vector<int> stencil;
 	if (robot%col !=0) {
 		stencil.push_back(-1);
@@ -44,10 +44,10 @@ int rrt(int robot, int dest, int col, int row, double prob, int * puzzel) {
 		neighbor = robot + stencil[i];
 		if (puzzel[neighbor] != -1) {
 			if (neighbor == dest) return neighbor;
-			myqueue.push(costCalculation(neighbor, dest, col));
+			mymap[costCalculation(neighbor, dest, col)]=neighbor;
 		}
 	}
-	int best = myqueue.top();
+	int best = mymap.begin()->second;
 	srand(time(0));
     double p = rand()%1000/(double)1000;
 	if (p < prob) return best;
@@ -67,6 +67,7 @@ int main(int argc, char **argv) {
     if(f==NULL){
         return 1;
     }
+	double Prob=0.4;
 
     int i;
     int j;
@@ -103,10 +104,8 @@ int main(int argc, char **argv) {
     }
 
     free(line);
-    for (i=0; i<rows*cols; i++) {
-		matrix_new[i]=matrix[i];
-	}
-    int robot_number =30;
+    
+    int robot_number =100;
     time_t t;
     int domain_size = rows * cols;
 
@@ -124,14 +123,17 @@ int main(int argc, char **argv) {
 		}
 		matrix[index] ++;
     }
+	for (i=0; i<rows*cols; i++) {
+		matrix_new[i]=matrix[i];
+	}
 	
 	int newPlace;
-	for (int step=0; step<100; step++) {
-		printf("step %d\n",step);
+	for (int step=0; step<1000; step++) {
 		for (int cor=0; cor<rows*cols-1; cor++) {
 				while (matrix[cor]>0) {
-					newPlace=rrt(cor, rows*cols-1, cols, rows, 0.5,matrix);
+					newPlace=rrt(cor, rows*cols-1, cols, rows, Prob,matrix);
 					matrix_new[newPlace]++;
+					matrix_new[cor]--;
 					matrix[cor]--;
 				}
 		}
