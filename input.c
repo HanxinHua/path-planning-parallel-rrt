@@ -3,8 +3,8 @@
 
 
 int main(int argc, char **argv) {
-    int rows = 1000;
-    int cols = 1000;
+    int rows = 100;
+    int cols = 100;
     int i, j;
     int ** matrix = NULL;
     matrix = malloc(rows * sizeof(int *));
