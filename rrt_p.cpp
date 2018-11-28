@@ -68,11 +68,11 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
   double Prob=0.4;
-  int robot_number =100;
+  int robot_number =160;
   int i;
   int j;
-  int rows=1000, cols=1000;
-  int * matrix = (int *)malloc(rows * cols* sizeof(int));
+  int rows, cols;
+  
   if (rank == 0) {
     if (argc!=2) {
       printf("./rrt input.txt\n");
@@ -86,19 +86,30 @@ int main(int argc, char **argv) {
     size_t sz = 0;
     ssize_t len = 0;
     char * line = NULL;
-    int intputarray[2];
     
-    
-    for (i = 0; i < 2; i++) {
-      len = getline(&line, &sz, f);
-      int value = atoi(line);
-      intputarray[i] = value;
+    len = getline(&line, &sz, f);
+	rows=atoi(line);
+	len = getline(&line, &sz, f);
+	cols=atoi(line);
+	fclose(f);
+  }
+  MPI_Bcast(&rows,1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&cols,1, MPI_INT, 0, MPI_COMM_WORLD);
+  int * matrix = (int *)malloc(rows * cols* sizeof(int));
+  if (rank == 0) {
+    FILE*f = fopen(argv[1], "r");
+    if(f==NULL){
+      return 1;
     }
     
-    rows = intputarray[0];
-    cols = intputarray[1];
-    i=0;
+    size_t sz = 0;
+    ssize_t len = 0;
+    char * line = NULL;
     
+    len = getline(&line, &sz, f);
+	len = getline(&line, &sz, f);
+    i=0;
+    //printf("good here from %d \n", rank);
     while((len = getline(&line, &sz, f))>0){
       for(j=0;j<len-1;j++){
 	if(line[j]=='1'){
@@ -111,7 +122,7 @@ int main(int argc, char **argv) {
       
       i++;
     }
-    
+    //printf("good here from %d \n", rank);
     free(line);
     
     time_t t;
@@ -133,9 +144,8 @@ int main(int argc, char **argv) {
     }
   }
   
-    
-  MPI_Bcast(&rows,1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Bcast(&cols,1, MPI_INT, 0, MPI_COMM_WORLD);
+  //printf("good here from %d \n", rank);
+  
   MPI_Bcast(&matrix[0],rows*cols, MPI_INT, 0, MPI_COMM_WORLD);
   
   int stride = rows/size;
@@ -157,6 +167,7 @@ int main(int argc, char **argv) {
   int * gamemap = (int *)malloc((my_lx+2*cols)* sizeof(int));
   int * gamemap_new = (int *)malloc((my_lx+2*cols)* sizeof(int));
   
+ // printf("good here from %d \n", rank);
   for (i=cols; i<my_lx+cols; i++) {
     gamemap[i] = matrix[i+my_xmin-cols];
     gamemap_new[i]=gamemap[i];
@@ -200,6 +211,7 @@ int main(int argc, char **argv) {
     MPI_Reduce(&sum,&total,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
     if (rank == 0) printf("total: %d\n",total);
   */
+  
   int * buffprev = (int *)malloc(cols* sizeof(int));
   int * buffnext = (int *)malloc(cols* sizeof(int));
   double commstart = MPI_Wtime();

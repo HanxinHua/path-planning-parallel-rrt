@@ -3,12 +3,17 @@
 
 
 int main(int argc, char **argv) {
-    int rows = 1000;
-    int cols = 1000;
+	
+	if (argc!=3) {
+		printf("input rows cols\n");
+		exit(EXIT_FAILURE);
+	}
+    int rows = atoi(argv[1]);
+    int cols = atoi(argv[2]);
     int i, j;
     int ** matrix = NULL;
     matrix = malloc(rows * sizeof(int *));
-        for (j = 0; j < cols; j++) {
+        for (j = 0; j < rows; j++) {
             matrix[j] = malloc(cols * sizeof(int));
         }
 
@@ -31,10 +36,10 @@ int main(int argc, char **argv) {
     int diag_c_start1 = cols/5;
     //int diag_c_end1 = 420;
     int color_start = 0;
-    int color_end = rows/50;
+    int color_end = cols/50;
 
-    for(i = diag_r_start1; i < diag_r_end1; i++){
-            for(j = diag_c_start1+color_start; j < diag_c_start1+color_end; j++){
+    for(i = diag_r_start1; i < diag_r_end1 && i<rows; i++){
+            for(j = diag_c_start1+color_start; j < diag_c_start1+color_end&& j <cols; j++){
                 matrix[i][j]= 1;
             }
         color_start ++;
@@ -47,10 +52,10 @@ int main(int argc, char **argv) {
     int diag_c_start2 = cols/2;
     //int diag_c_end2 = 720;
     color_start = 0;
-    color_end = rows/50;
+    color_end = cols/50;
 
-    for(i = diag_r_end2; i > diag_r_start2 -1; i--){
-            for(j = diag_c_start2+color_start; j < diag_c_start2+color_end; j++){
+    for(i = diag_r_end2; i > diag_r_start2 -1 && i<rows; i--){
+            for(j = diag_c_start2+color_start; j < diag_c_start2+color_end && j<cols; j++){
                 matrix[i][j]= 1;
             }
         color_start ++;
@@ -78,5 +83,6 @@ int main(int argc, char **argv) {
     }
 
     fclose(f);
+	//for (int i=0; i<cols; i++) free(matrix[i]);
     free(matrix);
 }
