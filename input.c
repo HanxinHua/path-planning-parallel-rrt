@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
     int diag_r_start1 = 8*rows/10;
     int diag_r_end1 = rows;
     int diag_c_start1 = cols/5;
-    //int diag_c_end1 = 420;
+    
     int color_start = 0;
     int color_end = cols/50;
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
     int diag_r_start2 = 0;
     int diag_r_end2 = rows/5;
     int diag_c_start2 = cols/2;
-    //int diag_c_end2 = 720;
+    
     color_start = 0;
     color_end = cols/50;
 
