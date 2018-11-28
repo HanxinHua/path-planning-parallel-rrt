@@ -10,6 +10,7 @@ int main(int argc, char **argv) {
 	}
     int rows = atoi(argv[1]);
     int cols = atoi(argv[2]);
+
     int i, j;
     int ** matrix = NULL;
     matrix = malloc(rows * sizeof(int *));
@@ -44,6 +45,9 @@ int main(int argc, char **argv) {
             }
         color_start ++;
         color_end ++;
+        if((diag_c_start1 + color_end)>cols ){
+            break;
+        }
     }
 	
 
@@ -60,6 +64,9 @@ int main(int argc, char **argv) {
             }
         color_start ++;
         color_end ++;
+         if((diag_c_start2 + color_end)>cols ){
+            break;
+        }
     }
 
      for(i = 55*rows/100; i < 6*rows/10; i++){
