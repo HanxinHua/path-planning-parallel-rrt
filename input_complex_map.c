@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     color_start = 0;
     color_end = 3;
 
-    for(i = diag_r_end4; i > diag_r_start4 -1 && i<rows; i--){
+    for(i = diag_r_end4; i > diag_r_start4 -1 && i>0; i--){
             for(j = diag_c_start4+color_start; j < diag_c_start4+color_end && j<cols; j++){
                 matrix[i][j]= 1;
             }
@@ -120,16 +120,37 @@ int main(int argc, char **argv) {
         }
     }
 
+    int diag_r_start5 = 65*rows/100;    // set up another diagonal obstacle
+    int diag_r_end5 = 80*rows/100;
+    int diag_c_start5 = cols-1;
+    
+    color_start = 0;
+    color_end = 3;
+    for(i = diag_r_end5; i > diag_r_start5 -1 && i>0; i--){
+            for(j = diag_c_start5-color_start; j > diag_c_start5-color_end && j>0; j--){
+                matrix[i][j]= 1;
+            }
+        color_start ++;
+        color_end ++;
+         /*if((diag_c_start5 + color_end)>cols ){
+            break;
+        }*/
+    }
+
      for(i = 55*rows/100; i < 6*rows/10; i++){
         for(j = 4*cols/5; j < cols; j++){
             matrix[i][j]= 1;
         }
     }
 
-    
-
     for(i = 35*rows/100; i < 38*rows/100; i++){
         for(j = 1*cols/5; j < 30*cols/50; j++){
+            matrix[i][j]= 1;
+        }
+    }
+
+    for(i = 25*rows/100; i < 27*rows/100; i++){
+        for(j = 3*cols/5; j < 40*cols/50; j++){
             matrix[i][j]= 1;
         }
     }
