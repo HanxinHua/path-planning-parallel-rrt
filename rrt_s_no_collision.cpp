@@ -27,7 +27,7 @@ double costCalculation(int place, int dest, int col) {
 
 
 //Use the rra* algorithm to find the direction to go
-int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel ,vector<vector<pair<int, int> > > & expected, int robot_number) {
+int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel ,vector<vector<int> > & expected_robot,vector<vector<int> > & expected_target, int robot_number) {
   map<double, int> mymap;
   vector<int> stencil;
   //Store the neighbours with the considerations of the boundaries
@@ -61,9 +61,9 @@ int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel ,ve
   unsigned end = stencil.size();
   unordered_set<int> random;
   if (p < prob) {
-	  expected[0].push_back(make_pair(robot_number, best));
+	  expected_robot[0].push_back(robot_number);
+	  expected_target[0].push_back(best);
 	  start=1;
-	  end=end-1;
 	  random.insert(best);
   }
   for (unsigned i = start; i<end; i++) {
@@ -72,20 +72,16 @@ int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel ,ve
         pick = rand()%stencil.size();
       }
 	  random.insert(robot+stencil[pick]);
-	  expected[i].push_back(make_pair(robot_number, robot+stencil[pick]));
+	  expected_robot[i].push_back(robot_number);
+	  expected_target[i].push_back(robot+stencil[pick]);
   }
   
-  expected[end].push_back(make_pair(robot_number, robot));
+  expected_robot[end].push_back(robot_number);
+  expected_target[end].push_back( robot);
   return 0;
 }
 
 
-int findMyPlace (vector<int> & v, int myPlace) {
-	for (unsigned i = 0; i<v.size(); i++) {
-		if (v[i] == myPlace) return i;
-	}
-	return -1;
-}
 
 
 int main(int argc, char **argv) {
@@ -94,17 +90,17 @@ int main(int argc, char **argv) {
   if(f==NULL){
     return 1;
   }
-  double Prob=0.6;
-  
+  double Prob=0.5;
   int i;
   int j;
   size_t sz = 0;
   ssize_t len = 0;
   char * line = NULL;
   int rows, cols;
-  vector<vector<pair<int, int> > > expected; //expectation, robot, target
-  expected.resize(9);
-  
+  vector<vector<int> > expected_robot;
+  vector<vector<int> > expected_target;//expectation, robot, target
+  expected_robot.resize(9);
+  expected_target.resize(9);
   //read the rows and the cols
   len = getline(&line, &sz, f);
   rows = atoi(line);
@@ -163,19 +159,19 @@ int main(int argc, char **argv) {
       //find the new direction for each robot in a cell
 	  cor = task_robot[i];
 	  if (cor == rows*cols-1) continue;
-	  newPlace=rrtstar(cor, rows*cols-1, cols, rows, Prob,matrix, expected, i);
+	  newPlace=rrtstar(cor, rows*cols-1, cols, rows, Prob,matrix, expected_robot,expected_target, i);
 	  if (newPlace != 0) {
 		  task_robot[i]=newPlace;
 		  signal--;
 	      continue;
 	  }
     }
-	for (unsigned i =0; i<expected.size(); i++) {
+	for (unsigned i =0; i<expected_robot.size(); i++) {
 		if ((int)set_down.size() == signal) break;
-		for (unsigned j=0; j<expected[i].size(); j++) {
+		for (unsigned j=0; j<expected_robot[i].size(); j++) {
 			if ((int)set_down.size() == signal) break;
-			robot_order = expected[i][j].first;
-			target = expected[i][j].second;
+			robot_order = expected_robot[i][j];
+			target = expected_target[i][j];
 			if (set_down.find(robot_order) != set_down.end() || unavaliable.find(target) != unavaliable.end()) continue;
 			task_robot[robot_order] = target;
 			set_down.insert(robot_order);
@@ -185,8 +181,10 @@ int main(int argc, char **argv) {
 	}
 	unavaliable.clear();
 	set_down.clear();
-	expected.clear();
-	expected.resize(9);
+	expected_robot.clear();
+	expected_target.clear();
+	expected_robot.resize(9);
+	expected_target.resize(9);
 
     }
   int sum = 0;
