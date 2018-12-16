@@ -35,7 +35,7 @@ int rrastar(int robot, int dest, int col, int row, double prob, int * puzzel, in
     if (robot/col !=row-1) stencil.push_back(-1+col);
   }
   if (robot%col !=col-1) {
-    stencil.push_back(1);
+    stencil.push_back(1); 
     if (robot/col !=0) stencil.push_back(1-col);
     if (robot/col !=row-1) stencil.push_back(1+col);
   }
@@ -139,7 +139,7 @@ int main(int argc, char **argv) {
     int domain_size = rows * cols;
     
     /* Intializes random number generator for robots */
-	/* 1 represents the robot */
+    /* 1 represents the robot */
     srand((unsigned) time(&t));
     
     for( int robot = 0 ; robot < robot_number ; robot++ ) {
@@ -211,17 +211,6 @@ int main(int argc, char **argv) {
   double commtime;
   prev=rank-1;
   next=rank+1;
-  /*
-    int sum=0;
-    int total;
-    for (int cor=cols; cor<my_lx+cols; cor++) {
-    gamemap[cor]=gamemap_new[cor];
-    if (gamemap_new[cor]>0) sum+=gamemap_new[cor];
-    
-    }
-    MPI_Reduce(&sum,&total,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
-    if (rank == 0) printf("total: %d\n",total);
-  */
   
   //Define the buff to receive the information
   int * buffprev = (int *)malloc(cols* sizeof(int));
@@ -232,8 +221,8 @@ int main(int argc, char **argv) {
   //go for 1000 steps
   for (int step=0; step<1000; step++) {		
     for (int cor=cols; cor<my_lx_in+cols; cor++) {
-		
-		//find the new direction for each robot in a cell
+      
+      //find the new direction for each robot in a cell
       while (gamemap[cor]>0) {
 	newPlace=rrastar(cor+my_xmin-cols, rows*cols-1, cols, rows, Prob,gamemap, my_xmin)-my_xmin+cols;
 	gamemap_new[newPlace]++;

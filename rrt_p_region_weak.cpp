@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
   double Prob=0.6;
-  int robot_number =10*size;
+  int robot_number =10*size; //ensure each task has the same average number of robots
   int i;
   int j;
   int rows, cols;
@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
     int domain_size = rows * cols;
     
     /* Intializes random number generator for robots */
-	/* 1 represents the robot */
+    /* 1 represents the robot */
     srand((unsigned) time(&t));
     
     for( int robot = 0 ; robot < robot_number ; robot++ ) {
@@ -210,17 +210,6 @@ int main(int argc, char **argv) {
   double commtime;
   prev=rank-1;
   next=rank+1;
-  /*
-    int sum=0;
-    int total;
-    for (int cor=cols; cor<my_lx+cols; cor++) {
-    gamemap[cor]=gamemap_new[cor];
-    if (gamemap_new[cor]>0) sum+=gamemap_new[cor];
-    
-    }
-    MPI_Reduce(&sum,&total,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
-    if (rank == 0) printf("total: %d\n",total);
-  */
   
   //Define the buff to receive the information
   int * buffprev = (int *)malloc(cols* sizeof(int));
@@ -232,7 +221,7 @@ int main(int argc, char **argv) {
   for (int step=0; step<1000; step++) {		
     for (int cor=cols; cor<my_lx_in+cols; cor++) {
 		
-		//find the new direction for each robot in a cell
+      //find the new direction for each robot in a cell
       while (gamemap[cor]>0) {
 	newPlace=rrastar(cor+my_xmin-cols, rows*cols-1, cols, rows, Prob,gamemap, my_xmin)-my_xmin+cols;
 	gamemap_new[newPlace]++;

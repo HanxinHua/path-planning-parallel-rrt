@@ -6,4 +6,5 @@ rrt_s_no_collision
 rrt_p_region
 rrt_p_robot
 rrt_p_robot_no_collision
+rrt_p_robot_no_collision_weak
 *.o

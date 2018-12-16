@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
   double Prob=0.4;
-  int robot_number =160;
+  int robot_number =10*size; //assign the same robot number for each task
   int i;
   int j;
   int rows, cols;
