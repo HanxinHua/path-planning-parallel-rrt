@@ -113,12 +113,11 @@ int main(int argc, char **argv) {
     }
     
     size_t sz = 0;
-    ssize_t len = 0;
     char * line = NULL;
     
-    len = getline(&line, &sz, f);
+    getline(&line, &sz, f);
     rows=atoi(line);
-    len = getline(&line, &sz, f);
+    getline(&line, &sz, f);
     cols=atoi(line);
     fclose(f);
   }
@@ -347,7 +346,6 @@ int main(int argc, char **argv) {
 
   commtime += MPI_Wtime() - commstart;
   MPI_Reduce(&commtime,&avetime,1,MPI_DOUBLE,MPI_SUM,0,MPI_COMM_WORLD);
-  int total = 0;
   int sum = 0;
 
     MPI_Reduce(&reach,&sum,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);

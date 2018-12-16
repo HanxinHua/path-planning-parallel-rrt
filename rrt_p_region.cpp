@@ -25,7 +25,7 @@ double costCalculation(int place, int dest, int col) {
 
 
 //Use the rra* algorithm to find the direction to go
-int rrt(int robot, int dest, int col, int row, double prob, int * puzzel, int my_xmin) {
+int rrastar(int robot, int dest, int col, int row, double prob, int * puzzel, int my_xmin) {
   map<double, int> mymap;
   vector<int> stencil;
   //Store the neighbours with the considerations of the boundaries
@@ -44,7 +44,7 @@ int rrt(int robot, int dest, int col, int row, double prob, int * puzzel, int my
   int neighbor;
   
   //add the neighbours with the cost to the map
-  for (int i = 0; i < stencil.size(); i++) {
+  for (unsigned i = 0; i < stencil.size(); i++) {
     neighbor = robot + stencil[i];
     //ignore the obstacles
     if (puzzel[neighbor-my_xmin+col] != -1) {
@@ -91,12 +91,11 @@ int main(int argc, char **argv) {
     }
     
     size_t sz = 0;
-    ssize_t len = 0;
     char * line = NULL;
     
-    len = getline(&line, &sz, f);
+    getline(&line, &sz, f);
     rows=atoi(line);
-    len = getline(&line, &sz, f);
+    getline(&line, &sz, f);
     cols=atoi(line);
     fclose(f);
   }
@@ -235,7 +234,7 @@ int main(int argc, char **argv) {
 		
 		//find the new direction for each robot in a cell
       while (gamemap[cor]>0) {
-	newPlace=rrt(cor+my_xmin-cols, rows*cols-1, cols, rows, Prob,gamemap, my_xmin)-my_xmin+cols;
+	newPlace=rrastar(cor+my_xmin-cols, rows*cols-1, cols, rows, Prob,gamemap, my_xmin)-my_xmin+cols;
 	gamemap_new[newPlace]++;
 	gamemap_new[cor]--;
 	gamemap[cor]--;

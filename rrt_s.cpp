@@ -43,7 +43,7 @@ int rrt(int robot, int dest, int col, int row, double prob, int * puzzel) {
   if (robot/col !=row-1) stencil.push_back(col);
   int neighbor;
   //add the neighbours with the cost to the map
-  for (int i = 0; i < stencil.size(); i++) {
+  for (unsigned i = 0; i < stencil.size(); i++) {
     neighbor = robot + stencil[i];
     //ignore the obstacles
     if (puzzel[neighbor] != -1) {
