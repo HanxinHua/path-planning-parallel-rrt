@@ -1,4 +1,4 @@
-all: input input_complex_map input_more_complex_map rrt_s rrt_s_no_collision rrt_p_region rrt_p_robot rrt_p_robot_no_collision
+all: input input_complex_map input_more_complex_map rrt_s rrt_s_no_collision rrt_p_region rrt_p_robot rrt_p_robot_no_collision rrt_p_region_weak
 
 input: input.o
 	gcc -o input input.o -lm
@@ -35,6 +35,12 @@ rrt_p_region: rrt_p_region.o
 
 rrt_p_region.o: rrt_p_region.cpp
 	mpicxx -c -Wall rrt_p_region.cpp -lm
+	
+rrt_p_region_weak: rrt_p_region_weak.o
+	mpicxx -o rrt_p_region_weak rrt_p_region_weak.o -lm
+
+rrt_p_region_weak.o: rrt_p_region_weak.cpp
+	mpicxx -c -Wall rrt_p_region_weak.cpp -lm
 	
 rrt_p_robot: rrt_p_robot.o
 	mpicxx -o rrt_p_robot rrt_p_robot.o -lm

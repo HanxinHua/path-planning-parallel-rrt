@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
   double Prob=0.6;
-  int robot_number =100;
+  int robot_number =10*size;
   int i;
   int j;
   int rows, cols;
@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
   MPI_Bcast(&rows,1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&cols,1, MPI_INT, 0, MPI_COMM_WORLD);
   
-  int * matrix = (int *)malloc(rows * cols* sizeof(int));
+  int * matrix = (int *)malloc(rows * cols *sizeof(int));
   
   //read the whole gamemap
   if (rank == 0) {
@@ -120,7 +120,6 @@ int main(int argc, char **argv) {
     i=0;
     
     while((len = getline(&line, &sz, f))>0){
-		//printf("%d\n",i);
       for(j=0;j<len-1;j++){
 	if(line[j]=='1'){
 	  matrix[i*cols+j]=-1;

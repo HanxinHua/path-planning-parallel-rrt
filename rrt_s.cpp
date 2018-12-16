@@ -95,10 +95,10 @@ int main(int argc, char **argv) {
   while((len = getline(&line, &sz, f))>0){
     for(j=0;j<len-1;j++){
       if(line[j]=='1'){
-	matrix[i*rows+j]=-1;
+	matrix[i*cols+j]=-1;
       }
       else{
-	matrix[i*rows+j]=0;
+	matrix[i*cols+j]=0;
       }
     }
     i++;
