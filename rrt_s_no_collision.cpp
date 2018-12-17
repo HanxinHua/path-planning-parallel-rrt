@@ -15,6 +15,21 @@
 
 using namespace std;
 
+
+double wall_time ()
+{
+#ifdef GETTIMEOFDAY
+    struct timeval t;
+    gettimeofday (&t, NULL);
+    return 1.*t.tv_sec + 1.e-6*t.tv_usec;
+#else
+    struct timespec t;
+    clock_gettime (CLOCK_MONOTONIC, &t);
+    return 1.*t.tv_sec + 1.e-9*t.tv_nsec;
+#endif
+}
+
+
 //Caluculate the cost between the point and the destination
 double costCalculation(int place, int dest, int col) {
   int xp, yp, xd, yd;
@@ -86,11 +101,9 @@ int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel ,ve
 
 int main(int argc, char **argv) {
 
-  FILE*f = fopen(argv[1], "r");
-  if(f==NULL){
-    return 1;
-  }
+  
   double Prob=0.5;
+  double ttime, stime;
   int i;
   int j;
   size_t sz = 0;
@@ -99,8 +112,13 @@ int main(int argc, char **argv) {
   int rows, cols;
   vector<vector<int> > expected_robot;
   vector<vector<int> > expected_target;//expectation, robot, target
+  stime = wall_time();
   expected_robot.resize(9);
   expected_target.resize(9);
+  FILE*f = fopen(argv[1], "r");
+  if(f==NULL){
+    return 1;
+  }
   //read the rows and the cols
   len = getline(&line, &sz, f);
   rows = atoi(line);
@@ -198,7 +216,9 @@ int main(int argc, char **argv) {
   for (unsigned i = 0; i<task_robot.size(); i++) {
 	  if (task_robot[i]==rows*cols-1) sum++;
   }
+  ttime = wall_time() - stime;
   printf("The successful percentage is %f\n",(double)sum/robot_number);
+  printf("\nTotal time is %lf seconds\n",ttime);
   free(matrix);
   
 }

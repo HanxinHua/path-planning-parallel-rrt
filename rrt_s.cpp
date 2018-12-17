@@ -13,6 +13,19 @@
 
 using namespace std;
 
+double wall_time ()
+{
+#ifdef GETTIMEOFDAY
+    struct timeval t;
+    gettimeofday (&t, NULL);
+    return 1.*t.tv_sec + 1.e-6*t.tv_usec;
+#else
+    struct timespec t;
+    clock_gettime (CLOCK_MONOTONIC, &t);
+    return 1.*t.tv_sec + 1.e-9*t.tv_nsec;
+#endif
+}
+
 //Caluculate the cost between the point and the destination
 double costCalculation(int place, int dest, int col) {
   int xp, yp, xd, yd;
@@ -25,7 +38,7 @@ double costCalculation(int place, int dest, int col) {
 
 
 //Use the rra* algorithm to find the direction to go
-int rrt(int robot, int dest, int col, int row, double prob, int * puzzel) {
+int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel) {
   map<double, int> mymap;
   vector<int> stencil;
   //Store the neighbours with the considerations of the boundaries
@@ -69,19 +82,21 @@ int rrt(int robot, int dest, int col, int row, double prob, int * puzzel) {
 
 int main(int argc, char **argv) {
 
-  FILE*f = fopen(argv[1], "r");
-  if(f==NULL){
-    return 1;
-  }
+ 
   double Prob=0.4;
-  
+  double stime, ttime;
   int i;
   int j;
   size_t sz = 0;
   ssize_t len = 0;
   char * line = NULL;
   int rows, cols;
+  stime = wall_time();
   
+  FILE*f = fopen(argv[1], "r");
+  if(f==NULL){
+    return 1;
+  }
   //read the rows and the cols
   len = getline(&line, &sz, f);
   rows = atoi(line);
@@ -134,7 +149,7 @@ int main(int argc, char **argv) {
     for (int cor=0; cor<rows*cols-1; cor++) {
       //find the new direction for each robot in a cell
       while (matrix[cor]>0) {
-	newPlace=rrt(cor, rows*cols-1, cols, rows, Prob,matrix);
+	newPlace=rrtstar(cor, rows*cols-1, cols, rows, Prob,matrix);
 	matrix_new[newPlace]++;
 	matrix_new[cor]--;
 	matrix[cor]--;
@@ -145,6 +160,8 @@ int main(int argc, char **argv) {
     }
     
   }
+  ttime = wall_time() - stime;
   printf("The successful percentage is %f\n",(double)matrix[rows*cols-1]/robot_number);
+  printf("\nTotal time is %lf seconds\n",ttime);
   
 }
