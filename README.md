@@ -45,3 +45,4 @@ rrt_p_region_weak.cpp  rrt_p_robot_no_collision_weak.cpp are used for the weak s
 ------------------------------------------------------------------------------------------------------------------------------
 One thing to notice is that if you want to run the validation test, makesure the srand() function is commented.
 <br>Finally, some parameters can be changed in the code, such as the probability and the robot number.
+<br>You can run the code anywhere. But the results we used in the paper is from the tests on stampede.
