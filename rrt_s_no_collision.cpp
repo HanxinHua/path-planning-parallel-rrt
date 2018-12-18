@@ -102,7 +102,7 @@ int rrtstar(int robot, int dest, int col, int row, double prob, int * puzzel ,ve
 int main(int argc, char **argv) {
 
   
-  double Prob=0.5;
+  double Prob=0.6;
   double ttime, stime;
   int i;
   int j;
@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
   
   free(line);
   
-  int robot_number =50;
+  int robot_number =1000;
   time_t t;
   int domain_size = rows * cols;
   

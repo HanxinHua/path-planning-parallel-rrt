@@ -73,9 +73,9 @@ int main(int argc, char **argv) {
   int rank, size;
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  
+  double commtime;
   double Prob=0.6;
-  int robot_number =100;
+  int robot_number =1000;
   int i;
   int j;
   int rows, cols;
@@ -208,7 +208,7 @@ int main(int argc, char **argv) {
   
   int newPlace;
   int prev, next;
-  double commtime;
+  
   prev=rank-1;
   next=rank+1;
   

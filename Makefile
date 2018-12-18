@@ -28,7 +28,7 @@ rrt_s_no_collision: rrt_s_no_collision.o
 	g++ -o rrt_s_no_collision rrt_s_no_collision.o -lm
 
 rrt_s_no_collision.o: rrt_s_no_collision.cpp
-	g++ -c -Wall rrt_s_no_collision.cpp -lm
+	g++ -std=c++0x -c -Wall rrt_s_no_collision.cpp -lm
 	
 rrt_p_region: rrt_p_region.o
 	mpicxx -o rrt_p_region rrt_p_region.o -lm
@@ -52,13 +52,13 @@ rrt_p_robot_no_collision: rrt_p_robot_no_collision.o
 	mpicxx -o rrt_p_robot_no_collision rrt_p_robot_no_collision.o -lm
 
 rrt_p_robot_no_collision.o: rrt_p_robot_no_collision.cpp
-	mpicxx -c -Wall rrt_p_robot_no_collision.cpp -lm
+	mpicxx -std=c++0x -c -Wall rrt_p_robot_no_collision.cpp -lm
 	
 rrt_p_robot_no_collision_weak: rrt_p_robot_no_collision_weak.o
 	mpicxx -o rrt_p_robot_no_collision_weak rrt_p_robot_no_collision_weak.o -lm
 
 rrt_p_robot_no_collision_weak.o: rrt_p_robot_no_collision_weak.cpp
-	mpicxx -c -Wall rrt_p_robot_no_collision_weak.cpp -lm
+	mpicxx -std=c++0x -c -Wall rrt_p_robot_no_collision_weak.cpp -lm
 
 
 clean:

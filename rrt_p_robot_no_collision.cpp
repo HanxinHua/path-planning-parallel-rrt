@@ -88,8 +88,8 @@ int main(int argc, char **argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
-  double Prob=0.4;
-  int robot_number =160;
+  double Prob=0.6;
+  int robot_number =1000;
   int i;
   int j;
   int rows, cols;
@@ -101,6 +101,7 @@ int main(int argc, char **argv) {
   expected_target.resize(9);
   recv_robot.resize(9);
   recv_target.resize(9);
+  double commstart = MPI_Wtime();
   //read the rows and the cols
   if (rank == 0) {
     if (argc!=2) {
@@ -213,7 +214,7 @@ int main(int argc, char **argv) {
   
   double commtime;
   
-  double commstart = MPI_Wtime();
+  
   double avetime;
   int newPlace;
   int cor;
