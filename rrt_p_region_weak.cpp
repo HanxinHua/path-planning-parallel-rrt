@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
   double Prob=0.6;
-  int robot_number =10*size; //ensure each task has the same average number of robots
+  int robot_number =100*size; //ensure each task has the same average number of robots
   int i;
   int j;
   int rows, cols;

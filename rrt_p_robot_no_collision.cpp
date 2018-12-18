@@ -212,7 +212,7 @@ int main(int argc, char **argv) {
   //use scatterv to assign robot position
   MPI_Scatterv(&task_robot[0], &sendcounts[0], &displs[0], MPI_INT, &myRobot[0], myRobotNumber, MPI_INT, 0, MPI_COMM_WORLD);
   
-  double commtime;
+  double commtime = 0;
   
   
   double avetime;

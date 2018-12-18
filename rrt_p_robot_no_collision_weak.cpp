@@ -88,8 +88,8 @@ int main(int argc, char **argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
-  double Prob=0.4;
-  int robot_number =10*size; //assign the same robot number for each task
+  double Prob=0.6;
+  int robot_number =100*size; //assign the same robot number for each task
   int i;
   int j;
   int rows, cols;
@@ -351,7 +351,7 @@ int main(int argc, char **argv) {
   }
   
   
-  commtime += MPI_Wtime() - commstart;
+  commtime = MPI_Wtime() - commstart;
   MPI_Reduce(&commtime,&avetime,1,MPI_DOUBLE,MPI_SUM,0,MPI_COMM_WORLD);
   int sum = 0;
 
