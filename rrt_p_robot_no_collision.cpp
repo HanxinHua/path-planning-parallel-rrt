@@ -245,7 +245,7 @@ int main(int argc, char **argv) {
       
     }
     // store the size for each expectations
-    for (i = 0; i<9; i++) {
+    for (int i = 0; i<9; i++) {
       mysize[i]=(int) expected_robot[i].size();
     }
     vector<int> whole_size;
