@@ -5,6 +5,7 @@ There are total 10 c/c++ files in this project and the makefile would compile al
 
 ------------------------------------------------------------------------------------------------------------------------------
 First is the map generator code:input.c input_complex_map.c input_more_complex_map.c, which generate three versions of the map from easy , hard to hell.
+\newline
 Run with the command: ./input rows cols
                       ./input_complex_map rows cols
                       ./input_more_complex_map rows cols
